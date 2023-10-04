@@ -2,13 +2,13 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
 pub struct TodoList {
-    tasks: Vec<Task>,
+    pub tasks: Vec<Task>,
 }
 
 #[derive(Serialize)]
-struct Task {
-    name: String,
-    done: bool,
+pub struct Task {
+    pub description: String,
+    pub done: bool,
 }
 
 impl Default for TodoList {
@@ -18,7 +18,7 @@ impl Default for TodoList {
 }
 
 pub enum Command {
-    AddTask { name: String },
+    AddTask { description: String },
     CompleteTask { index: usize },
 }
 
@@ -27,14 +27,14 @@ pub enum Error {}
 
 #[derive(Serialize, Deserialize)]
 pub enum Event {
-    TaskAdded { name: String },
+    TaskAdded { description: String },
     TaskCompleted { index: usize },
 }
 
 impl TodoList {
     pub fn handle(&self, command: Command) -> Result<Vec<Event>, Error> {
         match command {
-            Command::AddTask { name } => Ok(vec![Event::TaskAdded { name }]),
+            Command::AddTask { description } => Ok(vec![Event::TaskAdded { description }]),
             Command::CompleteTask { index } => Ok(vec![Event::TaskCompleted { index }]),
         }
     }
@@ -42,9 +42,9 @@ impl TodoList {
     pub fn apply(&mut self, events: Vec<Event>) -> &Self {
         for event in events.iter() {
             match event {
-                Event::TaskAdded { name } => {
+                Event::TaskAdded { description } => {
                     self.tasks.push(Task {
-                        name: name.clone(),
+                        description: description.clone(),
                         done: false,
                     });
                 }

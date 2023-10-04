@@ -1,0 +1,18 @@
+{
+  "folders": [
+	{
+		"name": "todolist",
+		"path": "."
+	},
+	{
+		"name": "rust",
+		"path": "rust"
+	},
+	{
+		"path": "react"
+	}
+],
+"settings": {
+	"explorer.sortOrder": "mixed"
+}
+}
