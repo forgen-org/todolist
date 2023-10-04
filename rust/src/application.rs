@@ -14,7 +14,10 @@ pub struct Application {
 
 #[wasm_bindgen]
 impl Application {
+    #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
+        // console_error_panic_hook::set_once();
+
         Self {
             store: InMemoryStore::new(),
         }
@@ -24,8 +27,6 @@ impl Application {
         let todolist = TodoListStore::get(&self.store).await;
 
         todolist.into()
-
-        // serde_wasm_bindgen::to_value(&todolist).unwrap()
     }
 
     pub async fn add_task(&self, description: String) -> () {

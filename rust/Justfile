@@ -1,3 +1,7 @@
 build:
     @echo 'Building...'
     wasm-pack build --target web
+
+watch:
+    @echo 'Watching...'
+    cargo watch --watch src -- wasm-pack build --target web
