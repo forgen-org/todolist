@@ -1,4 +1,4 @@
-use crate::domain::{Domain, TodoList, TodoListEvent, TodoListStore};
+use crate::domain::{AddTask, TodoList, TodoListEvent, TodoListStore};
 use crate::infrastructure::in_memory_store::InMemoryStore;
 use async_trait::async_trait;
 use wasm_bindgen::prelude::*;
@@ -6,21 +6,30 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 pub struct Application {
     #[wasm_bindgen(skip)]
-    pub domain: Domain,
+    pub store: InMemoryStore,
 }
 
 #[wasm_bindgen]
 impl Application {
     pub fn new() -> Self {
         Self {
-            domain: Domain {
-                todolist: Box::new(InMemoryStore::new()),
-            },
+            store: InMemoryStore::new(),
         }
     }
 
+    pub async fn get_todolist(&self) -> JsValue {
+        let todolist = TodoListStore::get(&self.store).await;
+
+        serde_wasm_bindgen::to_value(&todolist).unwrap()
+    }
+
     pub async fn add_task(&self) -> () {
-        self.domain.add_task().await.unwrap();
+        AddTask {
+            todolist: &self.store,
+        }
+        .handle()
+        .await
+        .unwrap();
     }
 }
 
