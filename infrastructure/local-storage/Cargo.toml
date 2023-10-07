@@ -1,0 +1,12 @@
+[package]
+name = "local-storage"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+application = { path = "../../application" }
+async-trait = "0.1.73"
+serde_json = "1.0.107"
+web-sys = { path = "../../bindings/web/wasm-bindgen/crates/web-sys", features = ["Storage", "Window"] }

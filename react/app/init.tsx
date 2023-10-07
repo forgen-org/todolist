@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 
-import init, { onPanic } from "@/wasm"
+import init, { setPanicHook } from "@/wasm"
 
 export default function Init({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false)
@@ -10,7 +10,7 @@ export default function Init({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     ;(async function () {
       await init()
-      onPanic()
+      setPanicHook()
       setReady(true)
     })()
   })

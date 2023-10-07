@@ -11,7 +11,7 @@ extern "C" {
 extern crate console_error_panic_hook;
 use std::panic;
 
-#[wasm_bindgen(js_name = onPanic)]
+#[wasm_bindgen(js_name = setPanicHook)]
 pub fn panic_hook() {
     panic::set_hook(Box::new(console_error_panic_hook::hook));
 }

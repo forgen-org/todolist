@@ -1,5 +1,5 @@
-use core::application::{commands::CreateTask, queries::ListTasks};
-use core::modules::in_memory_store::InMemoryStore;
+use application::{commands::CreateTask, queries::ListTasks};
+use local_storage::TodoListLocalStorage;
 
 use wasm_bindgen::prelude::*;
 
@@ -7,14 +7,14 @@ use crate::log;
 
 #[wasm_bindgen]
 pub struct Home {
-    todolist_store: InMemoryStore,
+    todolist_store: TodoListLocalStorage,
 }
 
 #[wasm_bindgen]
 impl Home {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
-        let todolist_store = InMemoryStore::new();
+        let todolist_store = TodoListLocalStorage {};
 
         Self { todolist_store }
     }

@@ -9,8 +9,9 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+application = { path = "../../application" }
 console_error_panic_hook = { path = "./console_error_panic_hook" }
-core = { path = "../../core" }
 js-sys = { path = "./wasm-bindgen/crates/js-sys" }
+local-storage = { path = "../../infrastructure/local-storage" }
 wasm-bindgen-futures = { path = "./wasm-bindgen/crates/futures" }
 wasm-bindgen= { path = "./wasm-bindgen" }
