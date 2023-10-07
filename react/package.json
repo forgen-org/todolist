@@ -9,18 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "app": "link:../bindings/js/pkg",
+    "mobx": "^6.10.2",
+    "mobx-react-lite": "^4.0.5",
     "next": "13.5.4",
-    "react-dom": "^18",
     "react": "^18",
-    "rust": "link:../rust/pkg"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react-dom": "^18",
     "@types/react": "^18",
+    "@types/react-dom": "^18",
     "autoprefixer": "^10",
-    "eslint-config-next": "13.5.4",
     "eslint": "^8",
+    "eslint-config-next": "13.5.4",
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",

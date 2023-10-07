@@ -5,11 +5,17 @@
 		"path": "."
 	},
 	{
-		"name": "rust",
-		"path": "rust"
+		"path": "core"
+	},
+	{
+		"name": "web",
+		"path": "bindings/web"
 	},
 	{
 		"path": "react"
+	},
+	{
+		"path": "vanilla"
 	}
 ],
 "settings": {

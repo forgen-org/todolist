@@ -1,0 +1,7 @@
+build:
+    @echo 'Building...'
+    wasm-pack build --target web --out-dir ../../react/wasm
+
+watch:
+    @echo 'Watching...'
+    cargo watch --watch src -- just build

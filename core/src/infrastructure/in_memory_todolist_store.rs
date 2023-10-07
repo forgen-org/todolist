@@ -1,10 +1,11 @@
-use crate::domain::{TodoList, TodoListEvent, TodoListStore};
-use crate::infrastructure::in_memory_store::InMemoryStore;
+use crate::application::services::TodoListStore;
+use crate::domain::todolist::{Event as TodoListEvent, TodoList};
+use crate::modules::in_memory_store::InMemoryStore;
 use async_trait::async_trait;
 
 #[async_trait]
 impl TodoListStore for InMemoryStore {
-    async fn get(&self) -> TodoList {
+    async fn get_snapshot(&self) -> TodoList {
         let mut todolist = TodoList::default();
 
         match self.get() {
@@ -18,7 +19,7 @@ impl TodoListStore for InMemoryStore {
         todolist
     }
 
-    async fn save(&self, events: Vec<TodoListEvent>) -> () {
+    async fn push_events(&self, events: Vec<TodoListEvent>) -> () {
         let value = serde_json::to_value(events).unwrap_or_default();
         self.save(value);
     }

@@ -1,0 +1,16 @@
+[package]
+name = "js"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+console_error_panic_hook = { path = "./console_error_panic_hook" }
+core = { path = "../../core" }
+js-sys = { path = "./wasm-bindgen/crates/js-sys" }
+wasm-bindgen-futures = { path = "./wasm-bindgen/crates/futures" }
+wasm-bindgen= { path = "./wasm-bindgen" }
