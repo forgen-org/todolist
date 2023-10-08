@@ -1,0 +1,28 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "prettier", 
+    "simple-import-sort"
+  ],
+  "extends": [
+    "eslint:recommended", 
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off",
+    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": "error",
+    "sort-keys": ["error", "asc", { "allowLineSeparatedGroups": true }]
+  },
+  "ignorePatterns": ["src/wasm/**/*"]
+}

@@ -37,7 +37,10 @@ impl Home {
     #[wasm_bindgen(js_name = addTask)]
     pub async fn add_task(&self, description: String) -> () {
         log(&format!("Adding task: {}", description));
-        CreateTask(&self.todolist_store).handle(description).await;
+        CreateTask(&self.todolist_store)
+            .handle(description)
+            .await
+            .unwrap();
         log("Task added");
     }
 }

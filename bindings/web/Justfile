@@ -1,6 +1,6 @@
 build:
     @echo 'Building...'
-    wasm-pack build --target web --out-dir ../../react/wasm
+    wasm-pack build --target web --out-dir ../../ionic/wasm/src
 
 watch:
     @echo 'Watching...'

@@ -1,7 +1,6 @@
 use application::services::TodoListStore;
 use application::todolist::{Event, TodoList};
 use async_trait::async_trait;
-// use std::sync::{Arc, Mutex};
 use web_sys::Storage;
 
 fn get_local_storage() -> Storage {
