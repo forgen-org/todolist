@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "yarn build:wasm && tsc && vite build",
+    "build:wasm": "wasm-pack build ../bindings/web --target web --out-dir ./src/wasm",
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
