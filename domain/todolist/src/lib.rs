@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Default, Serialize, Deserialize)]
 pub struct TodoList {
     pub tasks: Vec<Task>,
 }
@@ -9,12 +9,6 @@ pub struct TodoList {
 pub struct Task {
     pub description: String,
     pub done: bool,
-}
-
-impl Default for TodoList {
-    fn default() -> Self {
-        Self { tasks: vec![] }
-    }
 }
 
 pub enum Command {

@@ -22,7 +22,7 @@ impl TodoListStore for TodoListLocalStorage {
                 let events: Vec<Event> = serde_json::from_str(&json).unwrap();
                 events
             })
-            .unwrap_or(vec![]);
+            .unwrap_or_default();
         let mut todolist = TodoList::default();
         todolist.apply(events);
         todolist
@@ -37,7 +37,7 @@ impl TodoListStore for TodoListLocalStorage {
                 let events: Vec<Event> = serde_json::from_str(&json).unwrap();
                 events
             })
-            .unwrap_or(vec![]);
+            .unwrap_or_default();
         events.extend(new_events);
         let json = serde_json::to_string(&events).unwrap();
         storage.set_item("todolist", &json).unwrap();
