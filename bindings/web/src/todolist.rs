@@ -6,7 +6,7 @@ use wasm_bindgen::prelude::*;
 use crate::log;
 
 #[wasm_bindgen(js_name = createTask)]
-pub async fn add_task(description: String) -> () {
+pub async fn add_task(description: String) {
     log(&format!("Adding task: {}", description));
 
     let create_task = CreateTask {
