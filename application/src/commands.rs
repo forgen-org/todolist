@@ -1,15 +1,17 @@
 use super::services::TodoListStore;
 use todolist::{Command as TodoListCommand, Error as TodoListError};
 
-pub struct CreateTask<'a, S: TodoListStore>(pub &'a S);
+pub struct CreateTask {
+    pub todolist_store: Box<dyn TodoListStore>,
+}
 
-impl<'a, S: TodoListStore> CreateTask<'a, S> {
+impl CreateTask {
     pub async fn handle(&self, description: String) -> Result<(), TodoListError> {
-        let todolist = TodoListStore::get_current(self.0).await;
+        let todolist = self.todolist_store.get_current().await;
 
         let events = todolist.handle(TodoListCommand::AddTask { description })?;
 
-        TodoListStore::push_events(self.0, events).await;
+        self.todolist_store.push_events(events).await;
 
         Ok(())
     }

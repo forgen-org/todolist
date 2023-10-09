@@ -1,9 +1,9 @@
 import "./Home.css"
 
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 
-import { Home, Task } from "../wasm/js"
+import { createTask } from "../wasm/js"
 
 const Page: React.FC = () => {
   return (
@@ -26,23 +26,22 @@ const Page: React.FC = () => {
 }
 
 const TodoList = () => {
-  const home = useMemo(() => new Home(), [])
   const [value, setValue] = useState("")
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<{ description: string; done: boolean }[]>([])
 
   useEffect(() => {
     const init = async () => {
-      const { tasks } = await home.listTasks()
-      setTasks(tasks)
+      // const { tasks } = await home.listTasks()
+      setTasks([])
     }
     init()
   }, [])
 
   const onSubmit = async () => {
     if (value !== "") {
-      await home.addTask(value)
-      const { tasks } = await home.listTasks()
-      setTasks(tasks)
+      await createTask(value)
+      // const { tasks } = await home.listTasks()
+      // setTasks(tasks)
       setValue("")
     }
   }

@@ -1,4 +1,4 @@
-mod home;
+mod todolist;
 
 use wasm_bindgen::prelude::*;
 

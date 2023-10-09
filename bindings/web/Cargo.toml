@@ -10,8 +10,8 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 application = { path = "../../application" }
-console_error_panic_hook = { path = "./console_error_panic_hook" }
-js-sys = { path = "./wasm-bindgen/crates/js-sys" }
+console_error_panic_hook = "0.1.7"
+js-sys = "0.3.64"
 local-storage = { path = "../../infrastructure/local-storage" }
-wasm-bindgen-futures = { path = "./wasm-bindgen/crates/futures" }
-wasm-bindgen= { path = "./wasm-bindgen" }
+wasm-bindgen = "0.2.87"
+wasm-bindgen-futures = "0.4.37"
