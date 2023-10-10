@@ -164,9 +164,6 @@ dependencies = [
 [[package]]
 name = "todolist"
 version = "0.1.0"
-dependencies = [
- "serde",
-]
 
 [[package]]
 name = "unicode-ident"

@@ -1,6 +1,7 @@
 use application::services::TodoListStore;
 use application::todolist::{Event, TodoList};
 use async_trait::async_trait;
+use serde::{Deserialize, Serialize};
 use web_sys::Storage;
 
 fn get_local_storage() -> Storage {
@@ -19,12 +20,12 @@ impl TodoListStore for TodoListLocalStorage {
             .get_item("todolist")
             .unwrap()
             .map(|json| {
-                let events: Vec<Event> = serde_json::from_str(&json).unwrap();
+                let events: Vec<EventDTO> = serde_json::from_str(&json).unwrap();
                 events
             })
             .unwrap_or_default();
         let mut todolist = TodoList::default();
-        todolist.apply(events);
+        todolist.apply(events.into_iter().map(|e| e.into()).collect());
         todolist
     }
 
@@ -34,12 +35,36 @@ impl TodoListStore for TodoListLocalStorage {
             .get_item("todolist")
             .unwrap()
             .map(|json| {
-                let events: Vec<Event> = serde_json::from_str(&json).unwrap();
+                let events: Vec<EventDTO> = serde_json::from_str(&json).unwrap();
                 events
             })
             .unwrap_or_default();
-        events.extend(new_events);
+        events.extend(new_events.into_iter().map(|e| e.into()));
         let json = serde_json::to_string(&events).unwrap();
         storage.set_item("todolist", &json).unwrap();
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+enum EventDTO {
+    TaskAdded { description: String },
+    TaskCompleted { index: usize },
+}
+
+impl From<Event> for EventDTO {
+    fn from(event: Event) -> Self {
+        match event {
+            Event::TaskAdded { description } => EventDTO::TaskAdded { description },
+            Event::TaskCompleted { index } => EventDTO::TaskCompleted { index },
+        }
+    }
+}
+
+impl From<EventDTO> for Event {
+    fn from(dto: EventDTO) -> Self {
+        match dto {
+            EventDTO::TaskAdded { description } => Event::TaskAdded { description },
+            EventDTO::TaskCompleted { index } => Event::TaskCompleted { index },
+        }
     }
 }
