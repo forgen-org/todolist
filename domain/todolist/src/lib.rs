@@ -19,7 +19,7 @@ pub enum Command {
 #[derive(Debug)]
 pub enum Error {}
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Event {
     TaskAdded { description: String },
     TaskCompleted { index: usize },
