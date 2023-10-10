@@ -1,65 +1,40 @@
-import "./Home.css"
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonHeader,
+  IonIcon,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react"
+import { add, play } from "ionicons/icons"
 
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
-import { useEffect, useState } from "react"
+import { CreateTaskModal } from "../features/CreateTaskModal"
 
-import { createTask } from "../wasm/js"
-
-const Page: React.FC = () => {
+export const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>Todolist</IonTitle>
+          <IonButtons slot="end">
+            <IonButton id="create-task" expand="block">
+              <IonIcon slot="icon-only" icon={add}></IonIcon>
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <TodoList />
+        <IonFab slot="fixed" vertical="bottom" horizontal="center">
+          <IonFabButton>
+            <IonIcon icon={play}></IonIcon>
+          </IonFabButton>
+        </IonFab>
       </IonContent>
+      <CreateTaskModal trigger="create-task" />
     </IonPage>
   )
 }
-
-const TodoList = () => {
-  const [value, setValue] = useState("")
-  const [tasks, setTasks] = useState<{ description: string; done: boolean }[]>([])
-
-  useEffect(() => {
-    const init = async () => {
-      // const { tasks } = await home.listTasks()
-      setTasks([])
-    }
-    init()
-  }, [])
-
-  const onSubmit = async () => {
-    if (value !== "") {
-      await createTask(value)
-      // const { tasks } = await home.listTasks()
-      // setTasks(tasks)
-      setValue("")
-    }
-  }
-
-  return (
-    <div>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.description}>
-            <input type="checkbox" checked={task.done} readOnly />
-            {task.description}
-          </li>
-        ))}
-      </ul>
-      <input type="text" value={value} onChange={(e) => setValue(e.currentTarget.value)} />
-      <button onClick={onSubmit}>Add</button>
-    </div>
-  )
-}
-
-export default Page
