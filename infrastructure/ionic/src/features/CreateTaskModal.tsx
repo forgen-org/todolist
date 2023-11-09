@@ -11,7 +11,7 @@ import {
 } from "@ionic/react"
 import { useRef } from "react"
 
-import { createTask } from "../wasm/js"
+import { createTask } from "../wasm"
 
 export const CreateTaskModal = (props: { trigger: string }) => {
   const modal = useRef<HTMLIonModalElement>(null)

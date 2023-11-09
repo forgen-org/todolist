@@ -3,16 +3,6 @@
 	{
 		"name": "todolist",
 		"path": "."
-	},
-	{
-		"name": "web",
-		"path": "bindings/web"
-	},
-	{
-		"path": "react"
-	},
-	{
-		"path": "ionic"
 	}
 ],
 "settings": {
