@@ -1,11 +1,10 @@
 {
-  "folders": [
-	{
-		"name": "todolist",
-		"path": "."
-	}
-],
-"settings": {
-	"explorer.sortOrder": "mixed"
-}
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "rust-analyzer.showUnlinkedFileNotification": false
+    }
 }

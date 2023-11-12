@@ -3,9 +3,8 @@
 resolver = "2"
 
 members = [
-    "application",
-    "domain/*",
-    "infrastructure/*",
+    "applications/*",
+    "domains/*",
+    "drivers/*",
+    "interactions",
 ]
-
-exclude = ["infrastructure/ionic"]
