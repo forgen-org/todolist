@@ -1,20 +1,20 @@
 use super::events::Event;
-use super::framework::Projection;
+// use super::framework::Projection;
 use serde::{Deserialize, Serialize};
 
-#[derive(Default, Serialize, Deserialize)]
+#[derive(Default, Serialize, Deserialize, PartialEq)]
 pub struct TodoList {
     pub tasks: Vec<Task>,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize, PartialEq)]
 pub struct Task {
     pub description: String,
     pub done: bool,
 }
 
-impl Projection<Event> for TodoList {
-    fn apply(&mut self, events: Vec<Event>) {
+impl TodoList {
+    pub fn apply(&mut self, events: Vec<Event>) {
         for event in events.iter() {
             match event {
                 Event::TaskAdded { description } => {

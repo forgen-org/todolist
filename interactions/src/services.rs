@@ -1,22 +1,21 @@
 use async_trait::async_trait;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
-use todolist::framework::Projection;
 
 #[async_trait]
-pub trait Store<A>
+pub trait Store<E>
 where
-    A: Serialize + DeserializeOwned + Sync + Send,
+    E: Serialize + DeserializeOwned + Sync + Send,
 {
-    async fn pull(&self) -> Vec<A>;
-    async fn push(&self, events: Vec<A>) -> ();
+    async fn pull(&self) -> Vec<E>;
+    async fn push(&self, events: Vec<E>) -> ();
 }
 
 #[async_trait]
-pub trait Repository<E, A>
+pub trait Repository<P>
 where
-    A: Projection<E> + Serialize + DeserializeOwned + Sync + Send,
+    P: Serialize + DeserializeOwned + Sync + Send,
 {
-    async fn get(&self) -> A;
-    async fn save(&self, data: A) -> ();
+    async fn get(&self) -> Option<P>;
+    async fn save(&self, data: P) -> ();
 }
