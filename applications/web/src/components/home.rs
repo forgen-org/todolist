@@ -1,4 +1,4 @@
-use crate::create_task_modal::CreateTaskModal;
+use super::create_task_modal::CreateTaskModal;
 use yew::prelude::*;
 
 #[function_component]

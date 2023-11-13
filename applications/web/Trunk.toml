@@ -1,8 +1,7 @@
 [watch]
 # Paths to watch. The `build.target`'s parent folder is watched by default.
 watch = [
-    "../../drivers/ui/src",
-    "../../interactions/src",
+    "../../",
 ]
 
 [serve]

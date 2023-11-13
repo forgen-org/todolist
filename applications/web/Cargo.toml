@@ -7,7 +7,12 @@ edition = "2021"
 
 [dependencies]
 async-trait = "0.1.74"
+gloo-console = "0.3.0"
 interactions = { path = "../../interactions" }
+js-sys = "0.3.65"
 local-storage = { path = "../../drivers/local-storage" }
 todolist = { path = "../../domains/todolist" }
-ui = { path = "../../drivers/ui" }
+wasm-bindgen = "0.2.88"
+wasm-bindgen-futures = "0.4.38"
+web-sys = "0.3.65"
+yew = { git = "https://github.com/yewstack/yew/", features = ["csr"] }

@@ -24,7 +24,7 @@ where
     A: Serialize + DeserializeOwned + Sync + Send,
 {
     async fn pull(&self) -> Vec<A> {
-        LocalStorage::get::<Vec<A>>(self.key.clone()).unwrap()
+        LocalStorage::get::<Vec<A>>(self.key.clone()).unwrap_or(vec![])
     }
 
     async fn push(&self, new_events: Vec<A>) -> () {

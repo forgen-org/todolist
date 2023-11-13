@@ -1033,19 +1033,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ui"
-version = "0.1.0"
-dependencies = [
- "gloo-console 0.3.0",
- "interactions",
- "js-sys",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
- "yew",
-]
-
-[[package]]
 name = "unicode-ident"
 version = "1.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1144,10 +1131,15 @@ name = "webapp"
 version = "0.1.0"
 dependencies = [
  "async-trait",
+ "gloo-console 0.3.0",
  "interactions",
+ "js-sys",
  "local-storage",
  "todolist",
- "ui",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
+ "yew",
 ]
 
 [[package]]

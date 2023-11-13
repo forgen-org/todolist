@@ -1,4 +1,5 @@
 mod events;
+pub mod framework;
 mod messages;
 mod projections;
 

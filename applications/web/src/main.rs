@@ -1,20 +1,12 @@
+mod app;
+mod components;
+mod ionic;
 mod runtime;
 
-use interactions::presenters::CreateTaskForm;
+use app::App;
 use runtime::Runtime;
-use std::rc::Rc;
-use ui::app::{render, AppContext};
 
 fn main() {
-    let runtime = Rc::new(Runtime::new());
-
-    let create_task_form = CreateTaskForm {
-        runtime: runtime.clone(),
-    };
-
-    let app_context = AppContext {
-        create_task_form: Rc::new(create_task_form),
-    };
-
-    render(app_context);
+    let runtime = Runtime::new();
+    yew::Renderer::<App>::with_props(runtime).render();
 }

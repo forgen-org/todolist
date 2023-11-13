@@ -1,20 +1,20 @@
+use super::events::Event;
+use super::framework::Projection;
 use serde::{Deserialize, Serialize};
-
-use crate::events::Event;
 
 #[derive(Default, Serialize, Deserialize)]
 pub struct TodoList {
     pub tasks: Vec<Task>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Task {
     pub description: String,
     pub done: bool,
 }
 
-impl TodoList {
-    pub fn apply(&mut self, events: Vec<Event>) {
+impl Projection<Event> for TodoList {
+    fn apply(&mut self, events: Vec<Event>) {
         for event in events.iter() {
             match event {
                 Event::TaskAdded { description } => {
@@ -31,10 +31,8 @@ impl TodoList {
     }
 }
 
-impl From<Vec<Event>> for TodoList {
-    fn from(events: Vec<Event>) -> Self {
-        let mut todo_list = TodoList::default();
-        todo_list.apply(events);
-        todo_list
+impl TodoList {
+    pub fn get_current_task(&self) -> Option<Task> {
+        self.tasks.last().cloned()
     }
 }
