@@ -1,36 +1,41 @@
 use crate::app::AppContext;
 use crate::ionic::*;
+use gloo_console::log;
 use interactions::presenters::CreateTaskForm;
 use wasm_bindgen::JsValue;
 use yew::prelude::*;
 
 #[function_component]
 pub fn CreateTaskModal() -> Html {
-    // let modal_ref = use_node_ref();
+    let modal_ref = use_node_ref();
 
-    let runtime = use_context::<AppContext>().expect("no ctx found").runtime;
-    let presenter = CreateTaskForm { runtime };
+    let presenter = use_context::<AppContext>()
+        .expect("no ctx found")
+        .create_task_form;
 
-    // let close_modal = {
-    //     let modal = modal_ref.cast::<HTMLIonModalElement>().unwrap();
+    let close_modal = {
+        let modal_ref = modal_ref.clone();
 
-    //     Callback::from(move |_| {
-    //         modal.dismiss(JsValue::undefined(), None);
-    //     })
-    // };
+        Callback::from(move |_| {
+            modal_ref
+                .cast::<HTMLIonModalElement>()
+                .expect("no modal found")
+                .dismiss(JsValue::undefined(), None);
+        })
+    };
 
     html! {
         <>
-            <ion-button>{&presenter.title()}</ion-button>
-            <ion-modal trigger="open-modal">
+            <ion-button id="create-task-modal">{&presenter.title()}</ion-button>
+            <ion-modal ref={modal_ref} trigger="create-task-modal">
                 <ion-header>
                 <ion-toolbar>
                     <ion-buttons slot="start">
-                    <ion-button>{"Cancel"}</ion-button>
+                    <ion-button onclick={&close_modal}>{"Cancel"}</ion-button>
                     </ion-buttons>
                     <ion-title>{"Welcome"}</ion-title>
                     <ion-buttons slot="end">
-                    <ion-button strong="true">{"Confirm"}</ion-button>
+                    <ion-button strong="true" onclick={&close_modal}>{"Confirm"}</ion-button>
                     </ion-buttons>
                 </ion-toolbar>
                 </ion-header>

@@ -1,9 +1,9 @@
 use std::rc::Rc;
 
-use crate::{commands::create_task, services::TodoListStore};
+use crate::{commands::create_task, services::Store};
 
 pub struct CreateTaskForm {
-    pub runtime: Rc<dyn TodoListStore>,
+    pub runtime: Rc<dyn Store<todolist::Event>>,
 }
 
 impl CreateTaskForm {

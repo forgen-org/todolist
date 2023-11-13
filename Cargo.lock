@@ -644,10 +644,9 @@ name = "local-storage"
 version = "0.1.0"
 dependencies = [
  "async-trait",
+ "gloo-storage 0.3.0",
  "interactions",
  "serde",
- "serde_json",
- "web-sys",
 ]
 
 [[package]]
@@ -960,6 +959,9 @@ dependencies = [
 [[package]]
 name = "todolist"
 version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "tokio"
@@ -1034,6 +1036,7 @@ dependencies = [
 name = "ui"
 version = "0.1.0"
 dependencies = [
+ "gloo-console 0.3.0",
  "interactions",
  "js-sys",
  "wasm-bindgen",
@@ -1143,6 +1146,7 @@ dependencies = [
  "async-trait",
  "interactions",
  "local-storage",
+ "todolist",
  "ui",
 ]
 

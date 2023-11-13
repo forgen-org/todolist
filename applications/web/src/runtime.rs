@@ -1,27 +1,25 @@
 use async_trait::async_trait;
-use interactions::services::TodoListStore;
-use interactions::todolist::{Event, TodoList};
-use local_storage::TodoListLocalStorage;
+use interactions::services::Store;
+use local_storage::LocalStore;
 
 pub struct Runtime {
-    local_storage: TodoListLocalStorage,
+    event_store: LocalStore<todolist::Event>,
 }
 
 impl Runtime {
     pub fn new() -> Self {
         Self {
-            local_storage: TodoListLocalStorage {},
+            event_store: LocalStore::new("events".to_string()),
         }
     }
 }
 
 #[async_trait]
-impl TodoListStore for Runtime {
-    async fn get_current(&self) -> TodoList {
-        self.local_storage.get_current().await
+impl Store<todolist::Event> for Runtime {
+    async fn pull(&self) -> Vec<todolist::Event> {
+        self.event_store.pull().await
     }
-
-    async fn push_events(&self, new_events: Vec<Event>) -> () {
-        self.local_storage.push_events(new_events).await
+    async fn push(&self, new_events: Vec<todolist::Event>) -> () {
+        self.event_store.push(new_events).await
     }
 }

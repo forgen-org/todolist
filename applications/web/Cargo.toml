@@ -9,4 +9,5 @@ edition = "2021"
 async-trait = "0.1.74"
 interactions = { path = "../../interactions" }
 local-storage = { path = "../../drivers/local-storage" }
+todolist = { path = "../../domains/todolist" }
 ui = { path = "../../drivers/ui" }

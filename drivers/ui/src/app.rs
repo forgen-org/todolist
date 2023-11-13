@@ -1,11 +1,11 @@
 use crate::home::Home;
-use interactions::services::TodoListStore;
+use interactions::presenters::CreateTaskForm;
 use std::rc::Rc;
 use yew::prelude::*;
 
 #[derive(Properties, Clone)]
 pub struct AppContext {
-    pub runtime: Rc<dyn TodoListStore>,
+    pub create_task_form: Rc<CreateTaskForm>,
 }
 
 impl PartialEq for AppContext {
@@ -23,7 +23,6 @@ pub fn App(context: &AppContext) -> Html {
     }
 }
 
-pub fn render(runtime: Rc<dyn TodoListStore>) {
-    let ctx = AppContext { runtime };
+pub fn render(ctx: AppContext) {
     yew::Renderer::<App>::with_props(ctx).render();
 }

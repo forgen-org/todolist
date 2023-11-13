@@ -1,8 +1,12 @@
 use async_trait::async_trait;
-use todolist::{Event, TodoList};
+use serde::de::DeserializeOwned;
+use serde::Serialize;
 
 #[async_trait]
-pub trait TodoListStore {
-    async fn get_current(&self) -> TodoList;
-    async fn push_events(&self, events: Vec<Event>) -> ();
+pub trait Store<A>
+where
+    A: Serialize + DeserializeOwned + Sync + Send,
+{
+    async fn pull(&self) -> Vec<A>;
+    async fn push(&self, events: Vec<A>) -> ();
 }

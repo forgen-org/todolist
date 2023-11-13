@@ -1,17 +1,17 @@
 use std::rc::Rc;
 
-use super::services::TodoListStore;
-use todolist::{Command as TodoListCommand, Error as TodoListError};
+use crate::services::Store;
 
 pub async fn create_task(
-    runtime: Rc<dyn TodoListStore>,
+    runtime: Rc<dyn Store<todolist::Event>>,
     description: String,
-) -> Result<(), TodoListError> {
-    let todolist = TodoListStore::get_current(runtime.as_ref()).await;
+) -> Result<(), todolist::Error> {
+    let event_store: &dyn Store<todolist::Event> = runtime.as_ref();
+    // let todolist: todolist::TodoList = <dyn TodoListStore>::pull(runtime.as_ref()).await.into();
 
-    let events = todolist.handle(TodoListCommand::AddTask { description })?;
+    let events = todolist::Message::AddTask { description }.send()?;
 
-    TodoListStore::push_events(runtime.as_ref(), events).await;
+    event_store.push(events).await;
 
     Ok(())
 }

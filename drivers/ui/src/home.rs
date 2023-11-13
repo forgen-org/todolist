@@ -13,6 +13,8 @@ pub fn Home() -> Html {
                 </ion-buttons>
             </ion-toolbar>
           </ion-header>
+          <ion-content>
+          </ion-content>
       </>
     }
 }
