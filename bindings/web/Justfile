@@ -1,7 +1,0 @@
-build:
-    @echo 'Building...'
-    wasm-pack build --target web --out-dir ../../ionic/src/wasm && rm ../../ionic/src/wasm/.gitignore
-
-watch:
-    @echo 'Watching...'
-    cargo watch --watch src -- just build

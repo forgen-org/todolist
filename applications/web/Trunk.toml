@@ -1,0 +1,5 @@
+[watch]
+watch = [
+    "../../drivers/ui/src",
+    "../../interactions/src",
+]

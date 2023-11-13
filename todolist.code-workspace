@@ -1,21 +1,10 @@
 {
-  "folders": [
-	{
-		"name": "todolist",
-		"path": "."
-	},
-	{
-		"name": "web",
-		"path": "bindings/web"
-	},
-	{
-		"path": "react"
-	},
-	{
-		"path": "ionic"
-	}
-],
-"settings": {
-	"explorer.sortOrder": "mixed"
-}
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "rust-analyzer.showUnlinkedFileNotification": false
+    }
 }
