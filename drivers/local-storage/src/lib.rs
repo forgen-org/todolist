@@ -29,7 +29,7 @@ where
 
     async fn push(&self, new_events: Vec<A>) -> () {
         let mut events = self.pull().await;
-        events.extend(new_events.into_iter());
+        events.extend(new_events);
         LocalStorage::set(self.key.clone(), &events).unwrap();
     }
 }

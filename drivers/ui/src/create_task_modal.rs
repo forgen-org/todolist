@@ -1,7 +1,5 @@
 use crate::app::AppContext;
 use crate::ionic::*;
-use gloo_console::log;
-use interactions::presenters::CreateTaskForm;
 use wasm_bindgen::JsValue;
 use yew::prelude::*;
 

@@ -14,7 +14,7 @@ pub struct Task {
 }
 
 impl TodoList {
-    pub fn apply(&mut self, events: Vec<Event>) -> () {
+    pub fn apply(&mut self, events: Vec<Event>) {
         for event in events.iter() {
             match event {
                 Event::TaskAdded { description } => {
