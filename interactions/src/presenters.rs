@@ -1,22 +1,16 @@
-use crate::{
-    commands::create_task,
-    services::{Repository, Store},
-};
+use todolist::CurrentTask;
 
-#[derive(Clone)]
-pub struct CreateTaskForm<R> {
-    pub runtime: R,
+use crate::ports::{CurrentTaskRepository, Observable};
+
+#[derive(Clone, Default)]
+pub struct TaskState {
+    pub current_task: Option<CurrentTask>,
 }
 
-impl<R> CreateTaskForm<R>
-where
-    R: Store<todolist::Event> + Repository<todolist::TodoList>,
-{
-    pub async fn onsubmit(&self, description: String) {
-        create_task(&self.runtime, description).await.unwrap();
-    }
-
-    pub fn title(&self) -> String {
-        "Create Task".to_string()
+#[async_trait::async_trait]
+pub trait UseTask: CurrentTaskRepository + Observable<TaskState> {
+    async fn fetch_current_task(&self) {
+        let current_task = Some(CurrentTaskRepository::get(self).await.unwrap_or_default());
+        self.mutate(TaskState { current_task });
     }
 }

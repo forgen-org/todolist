@@ -1,18 +1,16 @@
-use crate::services::{Repository, Store};
+use crate::ports::{CurrentTaskRepository, EventStore, SnapshotRepository};
 
-pub async fn create_task<R>(runtime: &R, description: String) -> Result<(), todolist::Error>
-where
-    R: Store<todolist::Event> + Repository<todolist::TodoList>,
-{
-    let events = todolist::Message::AddTask { description }.send()?;
+#[async_trait::async_trait]
+pub trait TaskCommand: CurrentTaskRepository + EventStore + SnapshotRepository {
+    async fn send(&self, message: todolist::Message) -> Result<(), todolist::Error> {
+        let mut snapshot = SnapshotRepository::get(self).await.unwrap_or_default();
+        let new_events = snapshot.send(message)?;
+        snapshot.apply(new_events.clone());
 
-    Store::<todolist::Event>::push(runtime, events.clone()).await;
+        EventStore::push(self, new_events).await;
+        SnapshotRepository::save(self, snapshot.clone()).await;
+        CurrentTaskRepository::save(self, snapshot.into()).await;
 
-    let mut todolist = Repository::<todolist::TodoList>::get(runtime)
-        .await
-        .unwrap_or_default();
-    todolist.apply(events);
-    Repository::<todolist::TodoList>::save(runtime, todolist).await;
-
-    Ok(())
+        Ok(())
+    }
 }

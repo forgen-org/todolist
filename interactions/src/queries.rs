@@ -1,10 +1,9 @@
-use crate::services::Repository;
-use todolist::Task;
+use crate::ports::CurrentTaskRepository;
+use todolist::CurrentTask;
 
-pub async fn get_next_task<R>(runtime: R) -> Option<Task>
-where
-    R: Repository<todolist::TodoList>,
-{
-    let todolist = Repository::<todolist::TodoList>::get(&runtime).await?;
-    todolist.get_current_task()
+#[async_trait::async_trait]
+pub trait TaskQuery: CurrentTaskRepository {
+    async fn get_current_task(&self) -> CurrentTask {
+        CurrentTaskRepository::get(self).await.unwrap_or_default()
+    }
 }

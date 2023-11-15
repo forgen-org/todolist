@@ -1,14 +1,16 @@
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 
-use async_trait::async_trait;
-use interactions::services::{Repository, Store};
-use local_storage::LocalStore;
+use gloo_storage::{LocalStorage, Storage};
+use interactions::commands::TaskCommand;
+use interactions::ports::{CurrentTaskRepository, EventStore, Observable, SnapshotRepository};
+use interactions::presenters::{TaskState, UseTask};
+use interactions::queries::TaskQuery;
+use interactions::todolist::{CurrentTask, Event, Snapshot};
 use yew::Properties;
 
 #[derive(Clone, Properties)]
 pub struct Runtime {
-    event_store: Arc<LocalStore<todolist::Event>>,
-    todolist_repository: Arc<LocalStore<todolist::TodoList>>,
+    task_state: Arc<SimpleObservable<TaskState>>,
 }
 
 impl PartialEq for Runtime {
@@ -20,28 +22,80 @@ impl PartialEq for Runtime {
 impl Runtime {
     pub fn new() -> Self {
         Self {
-            event_store: Arc::new(LocalStore::new("events".to_string())),
-            todolist_repository: Arc::new(LocalStore::new("todolist".to_string())),
+            task_state: Arc::new(SimpleObservable::new(TaskState { current_task: None })),
         }
     }
 }
 
-#[async_trait]
-impl Store<todolist::Event> for Runtime {
-    async fn pull(&self) -> Vec<todolist::Event> {
-        self.event_store.pull().await
+#[async_trait::async_trait]
+impl CurrentTaskRepository for Runtime {
+    async fn get(&self) -> Option<CurrentTask> {
+        LocalStorage::get::<CurrentTask>("tasks").ok()
     }
-    async fn push(&self, new_events: Vec<todolist::Event>) -> () {
-        self.event_store.push(new_events).await
+    async fn save(&self, value: CurrentTask) -> () {
+        LocalStorage::set("tasks", &value).unwrap();
     }
 }
 
-#[async_trait]
-impl Repository<todolist::TodoList> for Runtime {
-    async fn get(&self) -> Option<todolist::TodoList> {
-        self.todolist_repository.get().await
+#[async_trait::async_trait]
+impl EventStore for Runtime {
+    async fn pull(&self) -> Option<Vec<Event>> {
+        LocalStorage::get::<Vec<Event>>("events").ok()
     }
-    async fn save(&self, new_value: todolist::TodoList) -> () {
-        self.todolist_repository.save(new_value).await
+    async fn push(&self, new_events: Vec<Event>) -> () {
+        let mut events = self.pull().await.unwrap_or_default();
+        events.extend(new_events);
+        LocalStorage::set("tasks", &events).unwrap();
+    }
+}
+
+#[async_trait::async_trait]
+impl SnapshotRepository for Runtime {
+    async fn get(&self) -> Option<Snapshot> {
+        LocalStorage::get::<Snapshot>("tasks").ok()
+    }
+    async fn save(&self, value: Snapshot) -> () {
+        LocalStorage::set("tasks", &value).unwrap();
+    }
+}
+
+impl TaskCommand for Runtime {}
+impl TaskQuery for Runtime {}
+impl UseTask for Runtime {}
+
+struct SimpleObservable<T> {
+    state: Mutex<T>,
+}
+
+impl<T> SimpleObservable<T> {
+    fn new(state: T) -> Self {
+        Self {
+            state: Mutex::new(state),
+        }
+    }
+}
+
+impl<T> Observable<T> for SimpleObservable<T> {
+    fn mutate(&self, new_state: T) -> () {
+        *self.state.lock().unwrap() = new_state;
+    }
+    fn observe<F>(&self, subscriber: F) -> ()
+    where
+        F: Fn(&T) -> (),
+    {
+        subscriber(&*self.state.lock().unwrap());
+    }
+}
+
+#[async_trait::async_trait]
+impl Observable<TaskState> for Runtime {
+    fn mutate(&self, new_state: TaskState) -> () {
+        self.task_state.mutate(new_state);
+    }
+    fn observe<F>(&self, subscriber: F) -> ()
+    where
+        F: Fn(&TaskState) -> (),
+    {
+        self.task_state.observe(subscriber);
     }
 }
