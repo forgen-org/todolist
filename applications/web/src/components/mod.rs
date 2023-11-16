@@ -1,3 +1,5 @@
 pub mod create_task_modal;
-pub mod current_task;
-pub mod home;
+pub mod sticky_note;
+
+pub use create_task_modal::*;
+pub use sticky_note::*;

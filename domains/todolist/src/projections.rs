@@ -1,7 +1,7 @@
 use crate::Snapshot;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Serialize, Deserialize, PartialEq)]
+#[derive(Clone, Default, PartialEq, Serialize, Deserialize)]
 pub enum CurrentTask {
     #[default]
     None,

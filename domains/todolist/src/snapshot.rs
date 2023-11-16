@@ -2,13 +2,13 @@ use crate::{errors::Error, Event, Message};
 use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
 
-#[derive(Clone, Default, Serialize, Deserialize, PartialEq)]
+#[derive(Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct Snapshot {
     pub backlog: VecDeque<String>,
     pub state: State,
 }
 
-#[derive(Clone, Default, Serialize, Deserialize, PartialEq)]
+#[derive(Clone, Default, PartialEq, Serialize, Deserialize)]
 pub enum State {
     #[default]
     Idle,
