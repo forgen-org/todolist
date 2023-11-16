@@ -26,7 +26,7 @@ pub fn StickyNote() -> Html {
             let runtime = runtime.clone();
             let task_state = task_state.clone();
             wasm_bindgen_futures::spawn_local(async move {
-                task_state.set(UseTask::start(&runtime, &task_state).await.unwrap());
+                task_state.set(UseTask::start(&runtime, &task_state).await);
             });
         })
     };

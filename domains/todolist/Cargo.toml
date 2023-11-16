@@ -7,3 +7,4 @@ edition = "2021"
 [dependencies]
 chrono = { version = "0.4.31", features = ["serde"] }
 serde = { version = "1.0.130", features = ["derive"] }
+thiserror = "1.0.50"

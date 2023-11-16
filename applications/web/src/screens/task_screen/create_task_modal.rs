@@ -41,11 +41,7 @@ pub fn CreateTaskModal() -> Html {
                 .value();
 
             wasm_bindgen_futures::spawn_local(async move {
-                task_state.set(
-                    UseTask::add(&runtime, &task_state, description)
-                        .await
-                        .unwrap(),
-                );
+                task_state.set(UseTask::add(&runtime, &task_state, description).await);
                 close_modal.emit(e)
             });
         })
