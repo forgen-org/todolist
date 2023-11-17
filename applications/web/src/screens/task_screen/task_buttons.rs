@@ -1,4 +1,5 @@
 use super::task_create_button::TaskCreateButton;
+use crate::components::LongPressFab;
 use crate::hooks::{use_runtime, use_task_state};
 use interactions::{presenters::UseTask, todolist::CurrentTask};
 use yew::prelude::*;
@@ -40,19 +41,19 @@ pub fn TaskButtons() -> Html {
         html! {
             <>
                 <ion-fab edge="true" horizontal="start" vertical="bottom" slot="fixed">
-                    <ion-fab-button color="danger" size="small">
+                    <LongPressFab color="danger" size="small">
                         <ion-icon name="trash"></ion-icon>
-                    </ion-fab-button>
+                    </LongPressFab>
                 </ion-fab>
                 <ion-fab edge="true" horizontal="center" vertical="bottom" slot="fixed">
-                    <ion-fab-button color="success" onclick={complete}>
+                    <LongPressFab color="success" onclick={complete}>
                         <ion-icon name="checkmark"></ion-icon>
-                    </ion-fab-button>
+                    </LongPressFab>
                 </ion-fab>
                 <ion-fab edge="true" horizontal="end" vertical="bottom" slot="fixed">
-                    <ion-fab-button color="warning" onclick={skip} size="small">
+                    <LongPressFab color="warning" onclick={skip} size="small">
                         <ion-icon name="play-skip-forward"></ion-icon>
-                    </ion-fab-button>
+                    </LongPressFab>
                 </ion-fab>
             </>
         }

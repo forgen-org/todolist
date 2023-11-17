@@ -54,3 +54,41 @@ main {
 .bg-light-blue { background-color: #b1d3f6; }
 .bg-magenta { background-color: #b485dc; }
 .bg-indigo { background-color: #8ca0ff; }
+
+/* Long Press Animation */
+@keyframes grow {
+    0% { 
+        transform: scale(1); 
+    }
+    100% { 
+        transform: scale(2); 
+    }
+}
+
+[longpress="true"] {
+    /* duration | easing-function | delay | iteration-count | direction | fill-mode | play-state | name */
+    animation: 2s ease forwards grow;
+    --ion-color-contrast: var(--ion-color-base)!important;
+}
+
+@keyframes fill {
+    0% { 
+        height: 0;
+    }
+    100% { 
+        height: 100%;
+    }
+}
+
+[longpress="true"] .loader {
+    animation: 1.5s ease forwards fill;
+    background-color: white;
+    border-radius: 50%;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+body.dark [longpress="true"] .loader {
+    background-color: black;
+}

@@ -10,8 +10,8 @@ pub fn TaskError() -> Html {
     {
         let error = task_state.error.clone();
         let is_open = is_open.clone();
-        use_effect_with(error.clone(), move |_| {
-            if error.clone().is_some() {
+        use_effect_with(error.clone(), move |error| {
+            if error.is_some() {
                 is_open.set(true);
             }
             || ()

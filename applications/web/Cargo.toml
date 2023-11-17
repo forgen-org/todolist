@@ -14,6 +14,7 @@ gloo-timers = "0.3.0"
 interactions = { path = "../../interactions" }
 js-sys = "0.3.65"
 pubsub = "0.2.3"
+stylist = "0.13.0"
 wasm-bindgen = "0.2.88"
 wasm-bindgen-futures = "0.4.38"
 web-sys = "0.3.65"
