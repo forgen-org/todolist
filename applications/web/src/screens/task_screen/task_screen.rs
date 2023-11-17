@@ -1,7 +1,7 @@
-pub mod task_screen;
-
+use super::task_buttons::TaskButtons;
+use super::task_error::TaskError;
+use super::task_sticky_note::TaskStickyNote;
 use crate::hooks::TaskStateProvider;
-use crate::screens::task_screen::{CreateTaskModal, ErrorToast, StickyNote};
 use yew::prelude::*;
 
 #[function_component]
@@ -16,12 +16,10 @@ pub fn TaskScreen() -> Html {
                 </ion-header>
                 <ion-content class="ion-padding" scroll-y="false">
                     <main>
-                        <div class="sticky-note bg-2">
-                            <StickyNote />
-                        </div>
+                        <TaskStickyNote />
                     </main>
-                    <CreateTaskModal />
-                    <ErrorToast />
+                    <TaskButtons />
+                    <TaskError />
                 </ion-content>
                 <ion-footer>
                     <ion-toolbar />

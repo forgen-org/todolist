@@ -23,6 +23,17 @@ pub trait UseTask: TaskCommand + TaskQuery {
         }
     }
 
+    async fn complete(&self, state: &TaskState) -> TaskState {
+        if let Err(error) = TaskCommand::send(self, todolist::Message::CompleteTask).await {
+            TaskState {
+                error: Some(error.to_string()),
+                ..state.clone()
+            }
+        } else {
+            self.get_current(state).await
+        }
+    }
+
     fn dismiss_error(&self, state: &TaskState) -> TaskState {
         TaskState {
             error: None,
@@ -35,6 +46,17 @@ pub trait UseTask: TaskCommand + TaskQuery {
         TaskState {
             current_task,
             ..state.clone()
+        }
+    }
+
+    async fn skip(&self, state: &TaskState) -> TaskState {
+        if let Err(error) = TaskCommand::send(self, todolist::Message::SkipTask).await {
+            TaskState {
+                error: Some(error.to_string()),
+                ..state.clone()
+            }
+        } else {
+            self.get_current(state).await
         }
     }
 

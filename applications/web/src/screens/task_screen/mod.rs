@@ -1,7 +1,7 @@
-pub mod create_task_modal;
-pub mod error_toast;
-pub mod sticky_note;
+mod task_buttons;
+mod task_create_button;
+mod task_error;
+mod task_screen;
+mod task_sticky_note;
 
-pub use create_task_modal::*;
-pub use error_toast::*;
-pub use sticky_note::*;
+pub use task_screen::TaskScreen;

@@ -7,8 +7,10 @@ edition = "2021"
 
 [dependencies]
 async-trait = "0.1.74"
+chrono = "0.4.31"
 gloo-console = "0.3.0"
 gloo-storage = "0.3.0"
+gloo-timers = "0.3.0"
 interactions = { path = "../../interactions" }
 js-sys = "0.3.65"
 pubsub = "0.2.3"

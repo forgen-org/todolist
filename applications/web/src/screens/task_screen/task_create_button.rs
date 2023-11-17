@@ -6,12 +6,34 @@ use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
 
 #[function_component]
-pub fn CreateTaskModal() -> Html {
+pub fn TaskCreateButton() -> Html {
     let modal_ref = use_node_ref();
     let textarea_ref = use_node_ref();
 
     let runtime = use_runtime();
     let task_state = use_task_state();
+
+    let open_modal = {
+        let modal_ref = modal_ref.clone();
+        let textarea_ref = textarea_ref.clone();
+
+        Callback::from(move |_| {
+            let modal_ref = modal_ref.clone();
+            let textarea_ref = textarea_ref.clone();
+            wasm_bindgen_futures::spawn_local(async move {
+                modal_ref
+                    .cast::<HTMLIonModalElement>()
+                    .expect("no modal found")
+                    .present()
+                    .await;
+                textarea_ref
+                    .cast::<HTMLIonTextareaElement>()
+                    .expect("no modal found")
+                    .set_focus()
+                    .await;
+            })
+        })
+    };
 
     let close_modal = {
         let modal_ref = modal_ref.clone();
@@ -40,8 +62,16 @@ pub fn CreateTaskModal() -> Html {
                 .expect("no modal found")
                 .value();
 
+            let textarea_ref = textarea_ref.clone();
             wasm_bindgen_futures::spawn_local(async move {
                 task_state.set(UseTask::add(&runtime, &task_state, description).await);
+                let textarea: HtmlTextAreaElement = textarea_ref
+                    .cast::<HTMLIonTextareaElement>()
+                    .expect("no modal found")
+                    .get_input_element()
+                    .await
+                    .into();
+                textarea.set_value("");
                 close_modal.emit(e)
             });
         })
@@ -49,12 +79,12 @@ pub fn CreateTaskModal() -> Html {
 
     html! {
         <>
-            <ion-fab edge="true" horizontal="end" vertical="bottom" slot="fixed">
-                    <ion-fab-button color="dark" id="open-modal">
-                        <ion-icon name="add"></ion-icon>
-                    </ion-fab-button>
+            <ion-fab edge="true" horizontal="center" vertical="bottom" slot="fixed">
+                <ion-fab-button color="dark" onclick={open_modal}>
+                    <ion-icon name="add"></ion-icon>
+                </ion-fab-button>
             </ion-fab>
-            <ion-modal initial-breakpoint="0.25" trigger="open-modal" ref={modal_ref}>
+            <ion-modal initial-breakpoint="0.25" ref={modal_ref}>
                 <ion-header>
                     <ion-toolbar>
                         <ion-buttons slot="start">
@@ -66,7 +96,8 @@ pub fn CreateTaskModal() -> Html {
                     </ion-toolbar>
                 </ion-header>
                 <ion-content class="ion-padding" scroll-y="false">
-                    <ion-textarea color="medium" id="description-textarea" placeholder="Write something..." ref={textarea_ref} rows="5" />
+                    <ion-textarea color="medium" placeholder="Write something..." ref={textarea_ref} rows="5">
+                    </ion-textarea>
                 </ion-content>
             </ion-modal>
         </>

@@ -3,7 +3,7 @@ use crate::hooks::use_task_state;
 use yew::prelude::*;
 
 #[function_component]
-pub fn ErrorToast() -> Html {
+pub fn TaskError() -> Html {
     let is_open = use_state(|| false);
     let task_state = use_task_state();
 

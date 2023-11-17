@@ -29,62 +29,20 @@ main {
     margin-bottom: 40px;
 }
 
-.bg-1 {
-    background-color: #f5f6f8;
-}
 
-.bg-2 {
-    background-color: #fff9b1;
-}
-
-.bg-3 {
-    background-color: #daf7a1;
-}
-
-.bg-4 {
-    background-color: #ffc000;
-}
-
-.bg-5 {
-    background-color: #c9df56;
-}
-
-.bg-6 {
-    background-color: #ff9d48;
-}
-
-.bg-7 {
-    background-color: #b6d7a9;
-}
-
-.bg-8 {
-    background-color: #ff0000;
-}
-
-.bg-9 {
-    background-color: #77ccc7;
-}
-
-.bg-10 {
-    background-color: #eca2c4;
-}
-
-.bg-11 {
-    background-color: #6ed8fa;
-}
-
-.bg-12 {
-    background-color: #ffcee0;
-}
-
-.bg-13 {
-    background-color: #b1d3f6;
-}
-
-.bg-14 {
-    background-color: #b485dc;
-}
-
-.bg-15 {
-    background-color: #8ca0ff;
-}
+/* https://uploads-us-west-2.insided.com/miro-us/attachment/27fae09a-d57c-46fa-8b02-37399c796235.jpg */
+.bg-white { background-color: #f5f6f8; }
+.bg-yellow { background-color: #fff9b1; }
+.bg-apple-green { background-color: #daf7a1; }
+.bg-orange { background-color: #ffc000; }
+.bg-lime-green { background-color: #c9df56; }
+.bg-peach { background-color: #ff9d48; }
+.bg-green { background-color: #b6d7a9; }
+.bg-red { background-color: #f16c7f; }
+.bg-teal { background-color: #77ccc7; }
+.bg-pink { background-color: #eca2c4; }
+.bg-cyan { background-color: #6ed8fa; }
+.bg-light-pink { background-color: #ffcee0; }
+.bg-light-blue { background-color: #b1d3f6; }
+.bg-magenta { background-color: #b485dc; }
+.bg-indigo { background-color: #8ca0ff; }
