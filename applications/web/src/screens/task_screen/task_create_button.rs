@@ -96,7 +96,13 @@ pub fn TaskCreateButton() -> Html {
                     </ion-toolbar>
                 </ion-header>
                 <ion-content class="ion-padding" scroll-y="false">
-                    <ion-textarea color="medium" placeholder="Write something..." ref={textarea_ref} rows="5">
+                      <ion-textarea
+                          color="medium"
+                          label="Description"
+                          label-placement="floating"
+                          ref={textarea_ref}
+                          rows="5"
+                      >
                     </ion-textarea>
                 </ion-content>
             </ion-modal>

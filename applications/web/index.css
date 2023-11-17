@@ -1,8 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=VT323&display=swap');
+
 main {
     align-items: stretch;
     display: flex;
+    flex-direction: column;
     height: 100%;
     justify-content: center;
+}
+
+.countdown {
+    font-family: 'VT323', monospace;
+    font-size: 4rem;
 }
 
 .sticky-note {

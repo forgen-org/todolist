@@ -14,7 +14,10 @@ extern "C" {
 
     #[wasm_bindgen (structural , method , js_class = "HTMLIonModalElement" , js_name = present)]
     pub async fn present(this: &HTMLIonModalElement);
+}
 
+#[wasm_bindgen]
+extern "C" {
     /// HTMLIonTextareaElement
     #[wasm_bindgen (extends = HtmlElement , extends = Element , extends = Node , extends = EventTarget , extends = :: js_sys :: Object , js_name = HTMLIonTextareaElement , typescript_type = "HTMLIonTextareaElement")]
     pub type HTMLIonTextareaElement;
@@ -23,6 +26,5 @@ extern "C" {
     pub async fn set_focus(this: &HTMLIonTextareaElement);
 
     #[wasm_bindgen (structural , method , js_class = "HTMLIonTextareaElement" , js_name = getInputElement)]
-    pub async fn get_input_element(this: &HTMLIonTextareaElement)
-        -> impl Into<HtmlTextAreaElement>;
+    pub async fn get_input_element(this: &HTMLIonTextareaElement) -> JsValue;
 }
