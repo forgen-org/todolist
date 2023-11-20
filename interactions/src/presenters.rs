@@ -34,6 +34,17 @@ pub trait UseTask: TaskCommand + TaskQuery {
         }
     }
 
+    async fn delete(&self, state: &TaskState) -> TaskState {
+        if let Err(error) = TaskCommand::send(self, todolist::Message::DeleteTask).await {
+            TaskState {
+                error: Some(error.to_string()),
+                ..state.clone()
+            }
+        } else {
+            self.get_current(state).await
+        }
+    }
+
     fn dismiss_error(&self, state: &TaskState) -> TaskState {
         TaskState {
             error: None,

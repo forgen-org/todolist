@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 pub enum Event {
     TaskAdded { description: String },
     TaskCompleted,
+    TaskDeleted,
     TaskSkipped,
     TaskStarted,
 }

@@ -1,6 +1,7 @@
 use super::task_create_button::TaskCreateButton;
-use crate::components::LongPressFab;
+use crate::components::{LongPressCountdown, LongPressFab};
 use crate::hooks::{use_runtime, use_task_state};
+use gloo_console::log;
 use interactions::{presenters::UseTask, todolist::CurrentTask};
 use yew::prelude::*;
 
@@ -9,11 +10,25 @@ pub fn TaskButtons() -> Html {
     let runtime = use_runtime();
     let task_state = use_task_state();
 
+    let delete = {
+        let task_state = task_state.clone();
+        let runtime = runtime.clone();
+
+        Callback::from(move |_: MouseEvent| {
+            let task_state = task_state.clone();
+            let runtime = runtime.clone();
+
+            wasm_bindgen_futures::spawn_local(async move {
+                task_state.set(UseTask::delete(&runtime, &task_state).await);
+            });
+        })
+    };
+
     let complete = {
         let task_state = task_state.clone();
         let runtime = runtime.clone();
 
-        Callback::from(move |_| {
+        Callback::from(move |_: MouseEvent| {
             let task_state = task_state.clone();
             let runtime = runtime.clone();
 
@@ -27,7 +42,7 @@ pub fn TaskButtons() -> Html {
         let task_state = task_state.clone();
         let runtime = runtime.clone();
 
-        Callback::from(move |_| {
+        Callback::from(move |_: MouseEvent| {
             let task_state = task_state.clone();
             let runtime = runtime.clone();
 
@@ -39,23 +54,13 @@ pub fn TaskButtons() -> Html {
 
     if let Some(CurrentTask::InProgress { .. }) = &task_state.current_task {
         html! {
-            <>
-                <ion-fab edge="true" horizontal="start" vertical="bottom" slot="fixed">
-                    <LongPressFab color="danger" size="small">
-                        <ion-icon name="trash"></ion-icon>
-                    </LongPressFab>
-                </ion-fab>
-                <ion-fab edge="true" horizontal="center" vertical="bottom" slot="fixed">
-                    <LongPressFab color="success" onclick={complete}>
-                        <ion-icon name="checkmark"></ion-icon>
-                    </LongPressFab>
-                </ion-fab>
-                <ion-fab edge="true" horizontal="end" vertical="bottom" slot="fixed">
-                    <LongPressFab color="warning" onclick={skip} size="small">
-                        <ion-icon name="play-skip-forward"></ion-icon>
-                    </LongPressFab>
-                </ion-fab>
-            </>
+            <div style="display:flex; padding: 24px;">
+                <LongPressFab color="danger" icon="trash" onclick={delete} />
+                <div style="flex-grow:1;"></div>
+                <LongPressCountdown onclick={complete} seconds={120} />
+                <div style="flex-grow:1;"></div>
+                <LongPressFab color="warning" icon="play-skip-forward" onclick={skip} />
+            </div>
         }
     } else {
         html! {

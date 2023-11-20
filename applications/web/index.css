@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat&family=VT323&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Caveat&family=VT323&display=swap");
 
 main {
     align-items: stretch;
@@ -9,7 +9,7 @@ main {
 }
 
 .countdown {
-    font-family: 'VT323', monospace;
+    font-family: "VT323", monospace;
     font-size: 4rem;
 }
 
@@ -30,7 +30,7 @@ main {
         0 20px 1px -9px rgba(0,0,0,0.15);
     display: flex;
     flex-grow: 1;
-    font-family: 'Caveat', cursive;
+    font-family: "Caveat", cursive;
     font-size: 2rem;
     justify-content: center;
     padding: 20px;
@@ -61,34 +61,73 @@ main {
         transform: scale(1); 
     }
     100% { 
-        transform: scale(2); 
+        transform: scale(1.75); 
     }
 }
 
-[longpress="true"] {
+.longpress {
     /* duration | easing-function | delay | iteration-count | direction | fill-mode | play-state | name */
     animation: 2s ease forwards grow;
-    --ion-color-contrast: var(--ion-color-base)!important;
 }
 
-@keyframes fill {
-    0% { 
-        height: 0;
-    }
-    100% { 
-        height: 100%;
-    }
-}
-
-[longpress="true"] .loader {
-    animation: 1.5s ease forwards fill;
+.longpress-background {
+    align-items: center;
     background-color: white;
-    border-radius: 50%;
-    bottom: 0;
+    clip-path: inset(100% 0% 0% 0%);
+    display: flex;
+    font-size: 24px;
+    height: 100%;
+    justify-content: center;
     position: absolute;
     width: 100%;
 }
 
-body.dark [longpress="true"] .loader {
-    background-color: black;
+@keyframes fill-bottom-to-up {
+    0% { 
+        clip-path: inset(100% 0% 0% 0%);
+    }
+    100% { 
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
+
+.longpress .longpress-background {
+    animation: 2s ease forwards fill-bottom-to-up;
+}
+
+ion-button.longpress-countdown {
+    --padding-top: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-bottom: 0;
+}
+
+ion-button.longpress-countdown span {
+    text-transform: none;
+    padding: 14px 2em;
+}
+
+.longpress-success {
+    align-items: center;
+    background-color: white;
+    clip-path: inset(0% 100% 0% 0%);
+    display: flex;
+    font-size: 24px;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+}
+
+@keyframes fill-left-to-right {
+    0% { 
+        clip-path: inset(0% 100% 0% 0%);
+    }
+    100% { 
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
+
+.longpress .longpress-success {
+    animation: 2s ease forwards fill-left-to-right;
 }

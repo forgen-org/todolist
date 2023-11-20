@@ -28,9 +28,17 @@ impl Snapshot {
                     self.backlog.pop_front();
                     self.state = State::Idle;
                 }
+                Event::TaskDeleted => {
+                    self.backlog.pop_front();
+                    self.state = State::InProgress {
+                        expires_at: chrono::Utc::now() + chrono::Duration::minutes(60),
+                    };
+                }
                 Event::TaskSkipped => {
                     self.backlog.rotate_left(1);
-                    self.state = State::Idle;
+                    self.state = State::InProgress {
+                        expires_at: chrono::Utc::now() + chrono::Duration::minutes(60),
+                    };
                 }
                 Event::TaskStarted => {
                     self.state = State::InProgress {
@@ -47,6 +55,13 @@ impl Snapshot {
             Message::CompleteTask => {
                 if let State::InProgress { .. } = self.state {
                     Ok(vec![Event::TaskCompleted])
+                } else {
+                    Err(Error::NotInProgress)
+                }
+            }
+            Message::DeleteTask => {
+                if let State::InProgress { .. } = self.state {
+                    Ok(vec![Event::TaskDeleted])
                 } else {
                     Err(Error::NotInProgress)
                 }

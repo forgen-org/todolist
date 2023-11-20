@@ -1311,6 +1311,7 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "chrono",
+ "gloo 0.10.0",
  "gloo-console 0.3.0",
  "gloo-storage 0.3.0",
  "gloo-timers 0.3.0",

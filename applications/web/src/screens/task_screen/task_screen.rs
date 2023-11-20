@@ -15,15 +15,14 @@ pub fn TaskScreen() -> Html {
                     </ion-toolbar>
                 </ion-header>
                 <ion-content class="ion-padding" scroll-y="false">
-                    <main>
-                        <TaskStickyNote />
-                    </main>
-                    <TaskButtons />
+                    <div style="display:flex; flex-direction: column; height: 100%;">
+                        <div style="flex-grow:1;">
+                            <TaskStickyNote />
+                        </div>
+                        <TaskButtons />
+                    </div>
                     <TaskError />
                 </ion-content>
-                <ion-footer>
-                    <ion-toolbar />
-                </ion-footer>
             </ion-app>
         </TaskStateProvider>
     }

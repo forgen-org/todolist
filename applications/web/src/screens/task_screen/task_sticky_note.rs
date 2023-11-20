@@ -54,6 +54,9 @@ pub fn TaskStickyNote() -> Html {
                         <h1 class="countdown ion-text-center"><Countdown seconds={from_now.num_seconds()} /></h1>
                         <div class="sticky-note bg-green">
                             {description}
+                            <ion-fab-button>
+                                <ion-icon name="checkmark" />
+                            </ion-fab-button>
                         </div>
                     </>
                 }
