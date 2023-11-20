@@ -79,11 +79,9 @@ pub fn TaskCreateButton() -> Html {
 
     html! {
         <>
-            <ion-fab edge="true" horizontal="center" vertical="bottom" slot="fixed">
-                <ion-fab-button color="dark" onclick={open_modal}>
-                    <ion-icon name="add"></ion-icon>
-                </ion-fab-button>
-            </ion-fab>
+            <ion-fab-button color="dark" onclick={open_modal}>
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
             <ion-modal initial-breakpoint="0.25" ref={modal_ref}>
                 <ion-header>
                     <ion-toolbar>

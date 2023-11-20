@@ -9,11 +9,6 @@ pub fn TaskScreen() -> Html {
     html! {
         <TaskStateProvider>
             <ion-app>
-                <ion-header>
-                    <ion-toolbar>
-                        <ion-title>{"TodoList"}</ion-title>
-                    </ion-toolbar>
-                </ion-header>
                 <ion-content class="ion-padding" scroll-y="false">
                     <div style="display:flex; flex-direction: column; height: 100%;">
                         <div style="flex-grow:1;">

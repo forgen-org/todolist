@@ -1,4 +1,3 @@
-use crate::components::Countdown;
 use crate::hooks::{use_runtime, use_task_state};
 use interactions::{presenters::UseTask, todolist::CurrentTask};
 use yew::prelude::*;
@@ -44,21 +43,11 @@ pub fn TaskStickyNote() -> Html {
                     </ion-button>
                 </div>
             },
-            CurrentTask::InProgress {
-                description,
-                expires_at,
-            } => {
-                let from_now = expires_at.clone() - chrono::Utc::now();
+            CurrentTask::InProgress { description, .. } => {
                 html! {
-                    <>
-                        <h1 class="countdown ion-text-center"><Countdown seconds={from_now.num_seconds()} /></h1>
-                        <div class="sticky-note bg-green">
-                            {description}
-                            <ion-fab-button>
-                                <ion-icon name="checkmark" />
-                            </ion-fab-button>
-                        </div>
-                    </>
+                    <div class="sticky-note bg-green">
+                        {description}
+                    </div>
                 }
             }
         },

@@ -1,7 +1,6 @@
 use super::task_create_button::TaskCreateButton;
 use crate::components::{LongPressCountdown, LongPressFab};
 use crate::hooks::{use_runtime, use_task_state};
-use gloo_console::log;
 use interactions::{presenters::UseTask, todolist::CurrentTask};
 use yew::prelude::*;
 
@@ -52,12 +51,14 @@ pub fn TaskButtons() -> Html {
         })
     };
 
-    if let Some(CurrentTask::InProgress { .. }) = &task_state.current_task {
+    if let Some(CurrentTask::InProgress { expires_at, .. }) = &task_state.current_task {
+        let from_now = expires_at.clone() - chrono::Utc::now();
+
         html! {
-            <div style="display:flex; padding: 24px;">
+            <div style="display:flex;">
                 <LongPressFab color="danger" icon="trash" onclick={delete} />
                 <div style="flex-grow:1;"></div>
-                <LongPressCountdown onclick={complete} seconds={120} />
+                <LongPressCountdown onclick={complete} seconds={from_now.num_seconds()} />
                 <div style="flex-grow:1;"></div>
                 <LongPressFab color="warning" icon="play-skip-forward" onclick={skip} />
             </div>
