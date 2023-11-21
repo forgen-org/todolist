@@ -9,7 +9,7 @@ pub fn TaskButtons() -> Html {
     let runtime = use_runtime();
     let task_state = use_task_state();
 
-    let delete = {
+    let stop = {
         let task_state = task_state.clone();
         let runtime = runtime.clone();
 
@@ -18,7 +18,7 @@ pub fn TaskButtons() -> Html {
             let runtime = runtime.clone();
 
             wasm_bindgen_futures::spawn_local(async move {
-                task_state.set(UseTask::delete(&runtime, &task_state).await);
+                task_state.set(UseTask::stop(&runtime, &task_state).await);
             });
         })
     };
@@ -51,14 +51,12 @@ pub fn TaskButtons() -> Html {
         })
     };
 
-    if let Some(CurrentTask::InProgress { expires_at, .. }) = &task_state.current_task {
-        let from_now = expires_at.clone() - chrono::Utc::now();
-
+    if let Some(CurrentTask::InProgress { expires_in, .. }) = &task_state.current_task {
         html! {
             <div style="display:flex;">
-                <LongPressFab color="danger" icon="trash" onclick={delete} />
+                <LongPressFab color="danger" icon="stop" onclick={stop} />
                 <div style="flex-grow:1;"></div>
-                <LongPressCountdown onclick={complete} seconds={from_now.num_seconds()} />
+                <LongPressCountdown onclick={complete} seconds={expires_in.0} />
                 <div style="flex-grow:1;"></div>
                 <LongPressFab color="warning" icon="play-skip-forward" onclick={skip} />
             </div>

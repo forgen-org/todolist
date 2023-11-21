@@ -5,6 +5,7 @@ pub enum Event {
     TaskAdded { description: String },
     TaskCompleted,
     TaskDeleted,
+    TaskPaused,
     TaskSkipped,
-    TaskStarted,
+    TaskStarted { at: chrono::DateTime<chrono::Utc> },
 }

@@ -81,4 +81,15 @@ pub trait UseTask: TaskCommand + TaskQuery {
             self.get_current(state).await
         }
     }
+
+    async fn stop(&self, state: &TaskState) -> TaskState {
+        if let Err(error) = TaskCommand::send(self, todolist::Message::PauseTask).await {
+            TaskState {
+                error: Some(error.to_string()),
+                ..state.clone()
+            }
+        } else {
+            self.get_current(state).await
+        }
+    }
 }

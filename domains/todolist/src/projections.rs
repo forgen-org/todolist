@@ -1,4 +1,4 @@
-use crate::Snapshot;
+use crate::{Seconds, Snapshot, State};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -8,21 +8,23 @@ pub enum CurrentTask {
     Ready,
     InProgress {
         description: String,
-        expires_at: chrono::DateTime<chrono::Utc>,
+        expires_in: Seconds,
     },
 }
 
 impl From<Snapshot> for CurrentTask {
     fn from(snapshot: Snapshot) -> Self {
-        if snapshot.backlog.is_empty() {
-            return CurrentTask::None;
-        }
-        match snapshot.state {
-            crate::State::Idle => CurrentTask::Ready,
-            crate::State::InProgress { expires_at } => CurrentTask::InProgress {
-                description: snapshot.backlog.front().unwrap().clone(),
-                expires_at,
-            },
+        if let Some(current) = snapshot.backlog.front() {
+            match snapshot.state {
+                State::Idle => CurrentTask::Ready,
+                State::Paused { .. } => CurrentTask::Ready,
+                State::Started { expires_at } => CurrentTask::InProgress {
+                    description: current.clone(),
+                    expires_in: Seconds((expires_at - chrono::Utc::now()).num_seconds()),
+                },
+            }
+        } else {
+            CurrentTask::None
         }
     }
 }
