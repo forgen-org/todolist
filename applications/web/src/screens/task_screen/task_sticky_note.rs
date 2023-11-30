@@ -34,7 +34,13 @@ pub fn TaskStickyNote() -> Html {
     match &task_state.current_task {
         Some(task) => match task {
             CurrentTask::None => html! {
-                {"Nothing here yet... Please add a task with the button below."}
+                <div class="sticky-note bg-peach">
+                    <p style="text-align:center">
+                        {"Nothing here yet..."}
+                        <br />
+                        {"Please add a task with the button below."}
+                    </p>
+                </div>
             },
             CurrentTask::Ready => html! {
                 <div class="sticky-note bg-yellow">
@@ -47,7 +53,7 @@ pub fn TaskStickyNote() -> Html {
             CurrentTask::InProgress { description, .. } => {
                 html! {
                     <div class="sticky-note bg-green">
-                        {description}
+                        <p style="text-align:center">{description}</p>
                     </div>
                 }
             }

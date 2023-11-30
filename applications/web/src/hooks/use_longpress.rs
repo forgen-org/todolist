@@ -17,7 +17,6 @@ pub fn use_long_press(onclick: Callback<MouseEvent>, duration_millis: u32) -> No
         let node_ref = node_ref.clone();
         let timeout = timeout.clone();
         Callback::from(move |_: TouchEvent| {
-            log!("onpress");
             let element = node_ref
                 .cast::<HtmlElement>()
                 .expect("Unable to cast to HtmlElement");
@@ -35,8 +34,6 @@ pub fn use_long_press(onclick: Callback<MouseEvent>, duration_millis: u32) -> No
         let node_ref = node_ref.clone();
         let timeout = timeout.clone();
         Callback::from(move |_: TouchEvent| {
-            log!("onrelease");
-
             let element = node_ref
                 .cast::<HtmlElement>()
                 .expect("Unable to cast to HtmlElement");
