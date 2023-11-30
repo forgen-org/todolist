@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat&family=VT323&display=swap");
+
+main {
+    display:flex; 
+    flex-direction: column; 
+    height: 100%;
+    margin: auto;
+    max-width: 700px;
+}
+
+.countdown {
+    font-family: "VT323", monospace;
+    font-size: 4rem;
+}
+
+.sticky-note {
+    align-items: center;
+    background-color: #f5f6f8;
+    /* border-radius: 10px; */
+    box-shadow:
+        /* The top layer shadow */
+        0 1px 1px rgba(0,0,0,0.15),
+        /* The second layer */
+        0 10px 0 -5px #fff9b1,
+        /* The second layer shadow */
+        0 10px 1px -4px rgba(0,0,0,0.15),
+        /* The third layer */
+        0 20px 0 -10px #fff9b1,
+        /* The third layer shadow */
+        0 20px 1px -9px rgba(0,0,0,0.15);
+    display: flex;
+    flex-grow: 1;
+    font-family: "Caveat", cursive;
+    font-size: 2rem;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+
+/* https://uploads-us-west-2.insided.com/miro-us/attachment/27fae09a-d57c-46fa-8b02-37399c796235.jpg */
+.bg-white { background-color: #f5f6f8; }
+.bg-yellow { background-color: #fff9b1; }
+.bg-apple-green { background-color: #daf7a1; }
+.bg-orange { background-color: #ffc000; }
+.bg-lime-green { background-color: #c9df56; }
+.bg-peach { background-color: #ff9d48; }
+.bg-green { background-color: #b6d7a9; }
+.bg-red { background-color: #f16c7f; }
+.bg-teal { background-color: #77ccc7; }
+.bg-pink { background-color: #eca2c4; }
+.bg-cyan { background-color: #6ed8fa; }
+.bg-light-pink { background-color: #ffcee0; }
+.bg-light-blue { background-color: #b1d3f6; }
+.bg-magenta { background-color: #b485dc; }
+.bg-indigo { background-color: #8ca0ff; }
+
+/* Long Press Animation */
+@keyframes grow {
+    0% { 
+        transform: scale(1); 
+    }
+    100% { 
+        transform: scale(1.75); 
+    }
+}
+
+.longpress {
+    /* duration | easing-function | delay | iteration-count | direction | fill-mode | play-state | name */
+    animation: 2s ease forwards grow;
+}
+
+.longpress-background {
+    align-items: center;
+    background-color: white;
+    clip-path: inset(100% 0% 0% 0%);
+    display: flex;
+    font-size: 24px;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+}
+
+@keyframes fill-bottom-to-up {
+    0% { 
+        clip-path: inset(100% 0% 0% 0%);
+    }
+    100% { 
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
+
+.longpress .longpress-background {
+    animation: 2s ease forwards fill-bottom-to-up;
+}
+
+ion-button.longpress-button {
+    --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+ion-button.longpress-button {
+    text-transform: none;
+    /* padding: 14px 2em; */
+}
+
+.longpress-success {
+    align-items: center;
+    background-color: white;
+    bottom: 0;
+    clip-path: inset(0% 100% 0% 0%);
+    display: flex;
+    font-size: 24px;
+    justify-content: center;
+    left: 0;
+    margin-bottom: calc(-1 * var(--padding-bottom) - 1px);
+    margin-inline-end: calc(-1 * var(--padding-end));
+    margin-inline-start: calc(-1 * var(--padding-start));
+    margin-top: calc(-1 * var(--padding-top) - 1px);
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+@keyframes fill-left-to-right {
+    0% { 
+        clip-path: inset(0% 100% 0% 0%);
+    }
+    100% { 
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
+
+.longpress .longpress-success {
+    animation: 2s ease forwards fill-left-to-right;
+}
