@@ -16,5 +16,5 @@ WORKDIR /applications/web
 EXPOSE 8080
 
 # Start a server and serve static files
-CMD [ "trunk", "serve" ]
+CMD ["trunk", "serve", "--release", "--address", "0.0.0.0", "--port", "8080"]
 
