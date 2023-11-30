@@ -1,7 +1,11 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub enum Event {
     TaskAdded { description: String },
-    TaskCompleted { index: usize },
+    TaskCompleted,
+    TaskDeleted,
+    TaskPaused,
+    TaskSkipped,
+    TaskStarted { at: chrono::DateTime<chrono::Utc> },
 }

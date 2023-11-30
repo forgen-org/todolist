@@ -1,40 +1,30 @@
+use crate::{Seconds, Snapshot, State};
 use serde::{Deserialize, Serialize};
 
-use crate::events::Event;
-
-#[derive(Default, Serialize, Deserialize)]
-pub struct TodoList {
-    pub tasks: Vec<Task>,
+#[derive(Clone, Default, PartialEq, Serialize, Deserialize)]
+pub enum CurrentTask {
+    #[default]
+    None,
+    Ready,
+    InProgress {
+        description: String,
+        expires_in: Seconds,
+    },
 }
 
-#[derive(Serialize, Deserialize)]
-pub struct Task {
-    pub description: String,
-    pub done: bool,
-}
-
-impl TodoList {
-    pub fn apply(&mut self, events: Vec<Event>) {
-        for event in events.iter() {
-            match event {
-                Event::TaskAdded { description } => {
-                    self.tasks.push(Task {
-                        description: description.clone(),
-                        done: false,
-                    });
-                }
-                Event::TaskCompleted { index } => {
-                    self.tasks[*index].done = true;
-                }
+impl From<Snapshot> for CurrentTask {
+    fn from(snapshot: Snapshot) -> Self {
+        if let Some(current) = snapshot.backlog.front() {
+            match snapshot.state {
+                State::Idle => CurrentTask::Ready,
+                State::Paused { .. } => CurrentTask::Ready,
+                State::Started { expires_at } => CurrentTask::InProgress {
+                    description: current.clone(),
+                    expires_in: Seconds((expires_at - chrono::Utc::now()).num_seconds()),
+                },
             }
+        } else {
+            CurrentTask::None
         }
-    }
-}
-
-impl From<Vec<Event>> for TodoList {
-    fn from(events: Vec<Event>) -> Self {
-        let mut todo_list = TodoList::default();
-        todo_list.apply(events);
-        todo_list
     }
 }

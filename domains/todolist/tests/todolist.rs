@@ -2,7 +2,7 @@
 
 // #[test]
 // fn test_add_task() {
-//     let mut todo_list = TodoList::default();
+//     let mut todo_list = Task::default();
 //     let cmd = Command::AddTask {
 //         description: "Test task".to_string(),
 //     };
@@ -16,7 +16,7 @@
 
 // #[test]
 // fn test_complete_task() {
-//     let mut todo_list = TodoList::default();
+//     let mut todo_list = Task::default();
 //     let cmd_add = Command::AddTask {
 //         description: "Test task".to_string(),
 //     };
@@ -33,7 +33,7 @@
 
 // #[test]
 // fn test_handle() {
-//     let todo_list = TodoList::default();
+//     let todo_list = Task::default();
 
 //     // Testing AddTask command
 //     match todo_list.handle(Command::AddTask {
@@ -66,7 +66,7 @@
 
 // #[test]
 // fn test_apply() {
-//     let mut todo_list = TodoList::default();
+//     let mut todo_list = Task::default();
 
 //     let events = vec![
 //         Event::TaskAdded {
