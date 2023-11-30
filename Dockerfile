@@ -12,9 +12,5 @@ COPY . .
 # Build the application using Trunk
 WORKDIR /applications/web
 
-# Expose the port
-EXPOSE 8080
-
-# Start a server and serve static files
-CMD ["trunk", "serve", "--release", "--address", "0.0.0.0", "--port", "8080"]
-
+# Build static files
+RUN trunk serve --release --address 0.0.0.0 --port 8080
