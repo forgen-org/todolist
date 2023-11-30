@@ -11,7 +11,7 @@ pub struct TaskStateProviderProps {
 
 #[function_component]
 pub fn TaskStateProvider(props: &TaskStateProviderProps) -> Html {
-    let msg = use_state(|| TaskState::default());
+    let msg = use_state(TaskState::default);
 
     html! {
         <ContextProvider<TaskStateHandle> context={msg}>

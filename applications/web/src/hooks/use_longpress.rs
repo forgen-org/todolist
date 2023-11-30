@@ -1,4 +1,3 @@
-use gloo_console::log;
 use gloo_timers::callback::Timeout;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;

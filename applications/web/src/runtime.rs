@@ -14,7 +14,7 @@ impl CurrentTaskRepository for Runtime {
         LocalStorage::get::<CurrentTask>("tasks").ok()
     }
     async fn save(&self, value: CurrentTask) -> () {
-        LocalStorage::set("tasks", &value).unwrap();
+        LocalStorage::set("tasks", value).unwrap();
     }
 }
 
@@ -40,7 +40,7 @@ where
         EventStore::pull(self).await.map(|events| events.into())
     }
     async fn save(&self, value: Snapshot) -> () {
-        LocalStorage::set("snapshot", &value).unwrap();
+        LocalStorage::set("snapshot", value).unwrap();
     }
 }
 

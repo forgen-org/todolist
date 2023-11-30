@@ -21,7 +21,7 @@ pub enum State {
 }
 
 impl Snapshot {
-    pub fn apply(&mut self, events: Vec<Event>) -> () {
+    pub fn apply(&mut self, events: Vec<Event>) {
         for event in events.iter() {
             match event {
                 Event::TaskAdded { description } => {
@@ -35,14 +35,13 @@ impl Snapshot {
                     self.backlog.pop_front();
                     self.state = State::Idle;
                 }
-                Event::TaskPaused => match self.state {
-                    State::Started { expires_at } => {
+                Event::TaskPaused => {
+                    if let State::Started { expires_at } = self.state {
                         self.state = State::Paused {
                             remaining: Seconds((expires_at - chrono::Utc::now()).num_seconds()),
                         };
                     }
-                    _ => (),
-                },
+                }
                 Event::TaskSkipped => {
                     self.backlog.rotate_left(1);
                     self.state = State::Idle;
@@ -53,7 +52,7 @@ impl Snapshot {
                         _ => chrono::Duration::minutes(60),
                     };
                     self.state = State::Started {
-                        expires_at: at.clone() + duration,
+                        expires_at: *at + duration,
                     };
                 }
             }
@@ -86,7 +85,7 @@ impl Snapshot {
             },
             Message::StartTask => match self.state {
                 State::Idle => {
-                    if self.backlog.len() > 0 {
+                    if !self.backlog.is_empty() {
                         Ok(vec![Event::TaskStarted {
                             at: chrono::Utc::now(),
                         }])
