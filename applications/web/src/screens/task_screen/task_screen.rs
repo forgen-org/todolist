@@ -10,13 +10,11 @@ pub fn TaskScreen() -> Html {
         <TaskStateProvider>
             <ion-app>
                 <ion-content class="ion-padding" scroll-y="false">
-                    <div style="display:flex; flex-direction: column; height: 100%;">
-                        <div style="flex-grow:1;">
-                            <TaskStickyNote />
-                        </div>
+                    <main>
+                        <TaskStickyNote />
                         <TaskButtons />
-                    </div>
-                    <TaskError />
+                        <TaskError />
+                    </main>
                 </ion-content>
             </ion-app>
         </TaskStateProvider>

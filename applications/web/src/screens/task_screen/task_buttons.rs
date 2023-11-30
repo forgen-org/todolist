@@ -1,5 +1,5 @@
 use super::task_create_button::TaskCreateButton;
-use crate::components::{LongPressCountdown, LongPressFab};
+use crate::components::{Countdown, LongPressButton, LongPressFab};
 use crate::hooks::{use_runtime, use_task_state};
 use interactions::{presenters::UseTask, todolist::CurrentTask};
 use yew::prelude::*;
@@ -56,14 +56,20 @@ pub fn TaskButtons() -> Html {
             <div style="display:flex;">
                 <LongPressFab color="danger" icon="stop" onclick={stop} />
                 <div style="flex-grow:1;"></div>
-                <LongPressCountdown onclick={complete} seconds={expires_in.0} />
+                <LongPressButton color="dark" onclick={complete}>
+                    <Countdown seconds={expires_in.0} />
+                </LongPressButton>
                 <div style="flex-grow:1;"></div>
                 <LongPressFab color="warning" icon="play-skip-forward" onclick={skip} />
             </div>
         }
     } else {
         html! {
-            <TaskCreateButton />
+            <div style="display:flex;">
+                <div style="flex-grow:1;"></div>
+                <TaskCreateButton />
+                <div style="flex-grow:1;"></div>
+            </div>
         }
     }
 }

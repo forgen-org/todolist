@@ -99,3 +99,11 @@ impl Snapshot {
         }
     }
 }
+
+impl From<Vec<Event>> for Snapshot {
+    fn from(events: Vec<Event>) -> Self {
+        let mut snapshot = Snapshot::default();
+        snapshot.apply(events);
+        snapshot
+    }
+}

@@ -1,3 +1,4 @@
+use crate::components::LongPressButton;
 use crate::hooks::{use_runtime, use_task_state};
 use interactions::{presenters::UseTask, todolist::CurrentTask};
 use yew::prelude::*;
@@ -37,10 +38,10 @@ pub fn TaskStickyNote() -> Html {
             },
             CurrentTask::Ready => html! {
                 <div class="sticky-note bg-yellow">
-                    <ion-button color="dark" onclick={start} shape="round" size="large">
+                    <LongPressButton color="dark" onclick={start}>
                         {"Start"}
                         <ion-icon name="play" slot="end"></ion-icon>
-                    </ion-button>
+                    </LongPressButton>
                 </div>
             },
             CurrentTask::InProgress { description, .. } => {

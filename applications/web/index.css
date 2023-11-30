@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Caveat&family=VT323&display=swap");
 
 main {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
+    display:flex; 
+    flex-direction: column; 
     height: 100%;
-    justify-content: center;
+    margin: auto;
+    max-width: 700px;
 }
 
 .countdown {
@@ -95,28 +95,31 @@ main {
     animation: 2s ease forwards fill-bottom-to-up;
 }
 
-ion-button.longpress-countdown {
-    --padding-top: 0;
-    --padding-start: 0;
-    --padding-end: 0;
-    --padding-bottom: 0;
+ion-button.longpress-button {
+    --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
-ion-button.longpress-countdown span {
+ion-button.longpress-button {
     text-transform: none;
-    padding: 14px 2em;
+    /* padding: 14px 2em; */
 }
 
 .longpress-success {
     align-items: center;
     background-color: white;
+    bottom: 0;
     clip-path: inset(0% 100% 0% 0%);
     display: flex;
     font-size: 24px;
-    height: 100%;
     justify-content: center;
+    left: 0;
+    margin-bottom: calc(-1 * var(--padding-bottom) - 1px);
+    margin-inline-end: calc(-1 * var(--padding-end));
+    margin-inline-start: calc(-1 * var(--padding-start));
+    margin-top: calc(-1 * var(--padding-top) - 1px);
     position: absolute;
-    width: 100%;
+    right: 0;
+    top: 0;
 }
 
 @keyframes fill-left-to-right {

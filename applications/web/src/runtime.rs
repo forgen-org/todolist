@@ -31,9 +31,13 @@ impl EventStore for Runtime {
 }
 
 #[async_trait::async_trait]
-impl SnapshotRepository for Runtime {
+impl SnapshotRepository for Runtime
+where
+    Runtime: EventStore,
+{
     async fn get(&self) -> Option<Snapshot> {
-        LocalStorage::get::<Snapshot>("snapshot").ok()
+        // LocalStorage::get::<Snapshot>("snapshot").ok()
+        EventStore::pull(self).await.map(|events| events.into())
     }
     async fn save(&self, value: Snapshot) -> () {
         LocalStorage::set("snapshot", &value).unwrap();
